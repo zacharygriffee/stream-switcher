@@ -1,0 +1,27 @@
+{
+  "name": "stream-switcher",
+  "version": "1.0.0",
+  "description": "A utility to dynamically switch between active streams seamlessly.",
+  "homepage": "https://github.com/zacharygriffee/stream-switcher#readme",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "brittle test.js",
+    "start": "node index.js"
+  },
+  "keywords": [
+    "stream",
+    "switch",
+    "duplex",
+    "node",
+    "streamx"
+  ],
+  "author": "Zachary Griffee",
+  "license": "MIT",
+  "dependencies": {
+    "streamx": "^2.11.0"
+  },
+  "devDependencies": {
+    "brittle": "^1.0.0"
+  }
+}
