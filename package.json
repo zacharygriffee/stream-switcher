@@ -1,6 +1,6 @@
 {
   "name": "stream-switcher",
-  "version": "1.0.0",
+  "version": "1.0.01",
   "description": "A utility to dynamically switch between active streams seamlessly.",
   "homepage": "https://github.com/zacharygriffee/stream-switcher#readme",
   "main": "index.js",
