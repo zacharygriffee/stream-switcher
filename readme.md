@@ -1,6 +1,6 @@
 # `stream-switcher`
 
-`stream-switcher` is a utility function that provides a flexible mechanism to dynamically switch between active streams while maintaining seamless data flow. It allows you to designate one active stream at a time, forwarding data and handling connections without interference from previously connected streams.
+`stream-switcher` is a utility function that provides a flexible mechanism to dynamically switch between active streams while maintaining seamless data flow. It allows you to designate one active stream at a time, forwarding data and handling connections without interference from previously connected streams. The utility also supports optional buffering when paused, preventing data loss during stream transitions.
 
 ## Usage
 
@@ -49,10 +49,26 @@ The `switcher` can also function as a writable stream, where data sent to `switc
 switcher.write('Forwarded to active stream');
 ```
 
+### Handling Buffering When Paused
+
+You can configure `createStreamSwitcher` to buffer data when no active stream is set:
+
+```javascript
+const switcher = createStreamSwitcher(null, { bufferWhenPaused: true, maxBufferSize: 50 });
+
+// Data written while paused will be buffered
+switcher.write('Buffered data');
+
+// Set an active stream to flush buffered data
+const activeStream = new PassThrough();
+switcher.switch(activeStream);
+```
+
 ## Features
 
 - **Dynamic Stream Switching**: Easily swap active streams without disrupting data flow from previous connections.
 - **Bi-directional Data Forwarding**: `switcher` relays data to and from the active stream seamlessly.
+- **Configurable Buffering**: Optionally buffer data when no active stream is set, with customizable buffer limits.
 - **Automatic Listener Management**: Only the active stream pushes data to `switcher`, ensuring data consistency and efficient resource management.
 
 ## API
@@ -62,7 +78,9 @@ switcher.write('Forwarded to active stream');
 Creates a new `Duplex` instance output stream that facilitates stream switching.
 
 - **`initialStream`** (optional): The first stream to connect to the switcher.
-- **`config`** (optional): The configuration supplied to output stream.
+- **`config`** (optional): The configuration supplied to the output stream.
+    - **`bufferWhenPaused`** (boolean, default: `false`): Whether to buffer data when paused.
+    - **`maxBufferSize`** (number, default: `100`): The maximum number of items to buffer when paused.
 
 #### `switcher.switch(newStream)`
 
