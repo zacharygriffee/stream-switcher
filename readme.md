@@ -23,7 +23,7 @@ const switcher = createStreamSwitcher(initialStream);
 
 // Capture data from the active stream
 switcher.on('data', (chunk) => {
-    console.log('Received:', chunk.toString());
+  console.log('Received:', chunk.toString());
 });
 
 // Write data to the initial stream
@@ -71,6 +71,10 @@ switcher.switch(activeStream);
 - **Configurable Buffering**: Optionally buffer data when no active stream is set, with customizable buffer limits.
 - **Automatic Listener Management**: Only the active stream pushes data to `switcher`, ensuring data consistency and efficient resource management.
 
+### Special Behavior with `null` or `undefined`
+
+Calling `switcher.switch(null)` or `switcher.switch(undefined)` will pause the stream and, if `bufferWhenPaused` is enabled, data written to the `switcher` will be buffered until a new active stream is set.
+
 ## API
 
 ### `createStreamSwitcher(initialStream, config)`
@@ -79,8 +83,8 @@ Creates a new `Duplex` instance output stream that facilitates stream switching.
 
 - **`initialStream`** (optional): The first stream to connect to the switcher.
 - **`config`** (optional): The configuration supplied to the output stream.
-    - **`bufferWhenPaused`** (boolean, default: `false`): Whether to buffer data when paused.
-    - **`maxBufferSize`** (number, default: `100`): The maximum number of items to buffer when paused.
+  - **`bufferWhenPaused`** (boolean, default: `false`): Whether to buffer data when paused.
+  - **`maxBufferSize`** (number, default: `100`): The maximum number of items to buffer when paused.
 
 #### `switcher.switch(newStream)`
 

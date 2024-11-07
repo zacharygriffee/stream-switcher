@@ -2,12 +2,13 @@ import { Duplex } from 'streamx';
 
 /**
  * Creates a duplex stream that can switch between different active streams and buffer data when paused.
- *
+ * Note: Passing `null` or `undefined` to `switcher.switch()` will pause the stream. If `bufferWhenPaused` is enabled, data will be buffered until a new active stream is set.
  * @param {Duplex|null} initialStream - The initial stream to connect to the output, or null to start paused.
  * @param {Object} [config={}] - Configuration options.
  * @param {boolean} [config.bufferWhenPaused=false] - Whether to buffer data when the output is paused.
  * @param {number} [config.maxBufferSize=100] - The maximum number of items to buffer when paused.
  * @returns {Duplex} A duplex stream that can switch between different active streams.
+ *
  */
 function createStreamSwitcher(initialStream, config = {}) {
     const { bufferWhenPaused = false, maxBufferSize = 100 } = config; // Added maxBufferSize configuration
